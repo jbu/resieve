@@ -21,6 +21,17 @@
         n
         (if (zero? (mod n p)) n))))
 
+resieve.core=> (defn xfilt [n]
+          #_=>   (prn "x" n)
+          #_=>   (zero? (mod n 3)))
+#'resieve.core/xfilt
+resieve.core=> (defn yfilt [n]
+          #_=> (prn "y" n)
+          #_=> (zero? (mod n 5)))
+#'resieve.core/yfilt
+ (def c (comp (r/filter yfilt) (r/filter xfilt)))
+(into [] (c (range 10)))
+
 (defn sieve [pred]
   (fn [f1]
     (let [sieves (atom (fn [] ()))]
