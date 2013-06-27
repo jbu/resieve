@@ -17,18 +17,16 @@
 
 (defn mod-filter [p]
   (fn [n]
-    (if (nil? n) n
-      (if (zero? (mod n p) n))))
-
-(defn pfilt [p n]
-  (zero? (mod n p)))
+    (if (nil? n) 
+        n
+        (if (zero? (mod n p)) n))))
 
 (defn sieve [pred]
   (fn [f1]
     (let [sieves (atom (fn [] ()))]
       (fn [result input]
-        (let [p (r/filter @sieves input)]
-          (swap! sieves (comp (r/filter (partial pred p)) @sieves))
+        (let [p (@sieves input)]
+          (swap! sieves (comp (pred p)) @sieves))
           (f1 result p))))))
 
 
